@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd">
+<!--    创建spring的配置文件 -->
+<!--    利用spring创建对象-->
+<!--    声明数据源，作用是连接数据库 创建druid 实例化bean-->
+<!--    把数据库的配置信息写道配置内容
+spring 知道jdbc.properties文件的位置-->
+<!--    <context:/>-->
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.passwd}"/>
+        <property name="maxActive" value="${jdbc.max}"/>
+    </bean>
+<!--    连接池的对象创建完成-->
+
+<!--&lt;!&ndash;    创建sqlsessionfactory&ndash;&gt;-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+<!--        set注入 将数据库连接池赋值给datasocrec-->
+        <property name="dataSource" ref="dataSource"/>
+<!--        mybatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+    </bean>
+
+<!--    创建dao对象 配置文件中没有指定指定这个名字 但目的是把dao包下的所有接口都创建一个对象 接口为什么能实例化对象-->
+<!-- MapperScannerConfigurer 往内部调用getMapper()生成每个dao接口的代理对象   -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+<!--        指定报名 创建好的dao对象，放到spring容器中 得到dao对象-->
+        <property name="basePackage" value="org.example.dao"/>
+
+    </bean>
+
+
+</beans>

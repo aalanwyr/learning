@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 注册bean对象
+     id：自定义对象的名称，通过id在代码中使用对象
+     class：类的全限定名称，不能是接口
+     创建一个bean 就是创建一个对象
+     spring-beans.xsd 是约束文件
+     spring 底层完成someService对象的创建
+     spring将创建好的对象放入map中，springMap.put(id,对象)
+     一个bean标签声明一个对象
+-->
+    <bean id="someService" class="org.example.service.SomeServiceImpl" />
+</beans>

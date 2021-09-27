@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 声明student对象
+         注入：就是赋值
+         di:给属性赋值
+         1、set注入（设值注入）：spring调用类的set方法，在set方法中完成属性的赋值
+         1）简单类型的set赋值
+            一个property 对一个变量进行赋值
+            spring 调用的是set方法 和其他无关
+            value中的值无论是什么类型，都必须加银行-->
+    <bean id="mystudent"  class="org.example.service.ba01.Student">
+        <property name="age" value="11"/>
+        <property name="name" value="王五"/>
+
+    </bean>
+
+<!--    引用赋值
+       引用类型的set注入-->
+    <bean id="mystudent2"  class="org.example.service.ba02.Student">
+        <property name="age" value="11"/>
+        <property name="name" value="王五"/>
+        <property name="school" ref="myschool"/>
+
+    </bean>
+
+<!--    声明一个school对象-->
+    <bean id="myschool" class="org.example.service.ba02.School">
+     <property name="name" value="HUST"/>
+      <property name="address" value="武汉"/>
+
+    </bean>
+
+</beans>
